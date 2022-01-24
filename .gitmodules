@@ -1,0 +1,3 @@
+[submodule "amaranth_vexriscv/verilog/ext/VexRiscv"]
+	path = amaranth_vexriscv/verilog/ext/VexRiscv
+	url = https://github.com/SpinalHDL/VexRiscv
