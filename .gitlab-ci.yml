@@ -2,8 +2,14 @@ image: python:latest
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  PYPI_INDEX: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/api/v4/groups/${CI_PROJECT_NAMESPACE}/-/packages/pypi/simple"
 
-# Install SBT
+cache:
+  paths:
+    - .cache/pip
+
+# Install SBT and Python deps
 before_script:
   - apt-get update -y
   - apt-get install apt-transport-https curl gnupg openjdk-11-jre-headless -yqq -y
@@ -12,9 +18,21 @@ before_script:
   - chmod 644 /etc/apt/trusted.gpg.d/scalasbt-release.gpg
   - apt-get update -y
   - apt-get install sbt -y
+  - python --version
+  - python -m pip install --upgrade pip
+  - pip config set global.index-url "${PYPI_INDEX}"
+  - pip install -r dev-requirements.txt
 
 generate_dist:
   rules:
     - if: $CI_PIPELINE_SOURCE != "merge_request_event"
+  variables:
+    TWINE_PASSWORD: '${CI_JOB_TOKEN}'
+    TWINE_USERNAME: 'gitlab-ci-token'
+    TWINE_REPOSITORY_URL: 'https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi'
   script:
-    - cd amaranth_vexriscv/verilog && make
+    - ( cd amaranth_vexriscv/verilog && make )
+    - pip install --upgrade build twine
+    - python -m build
+    - python -m twine check --strict dist/*
+    - python -m twine upload --verbose dist/*
