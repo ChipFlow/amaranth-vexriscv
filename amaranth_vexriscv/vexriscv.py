@@ -30,7 +30,7 @@ class VexRiscv(Elaboratable):
     def elaborate(self, platform):
         m = Module()
         ext_irq = Signal(32)
-        for i, irq in enumerate(irq_sigs):
+        for i, irq in enumerate(self.irq_sigs):
             if irq is not None:
                 m.d.comb += ext_irq[i].eq(irq)
             else:
@@ -38,8 +38,8 @@ class VexRiscv(Elaboratable):
         conn = dict(
             i_timerInterrupt=self.timer_irq,
             i_softwareInterrupt=self.software_irq,
-            i_externalInterruptArray=self.ext_irq,
-            o_debug_resetOut=self.debug_rst,
+            i_externalInterruptArray=ext_irq,
+            o_debug_resetOut=self.debug_rst_out,
 
             o_iBusWishbone_CYC=self.ibus.cyc,
             o_iBusWishbone_STB=self.ibus.stb,
@@ -82,5 +82,7 @@ class VexRiscv(Elaboratable):
             "VexRiscv",
             **conn
         )
-        platform.add_file(Path(__file__).parent / f"verilog/VexRiscv_{self.config}.v")
+        filename = Path(__file__).parent / f"verilog/VexRiscv_{self.config}.v"
+        with open(filename, 'r') as f:
+            platform.add_file(str(filename), f)
         return m
