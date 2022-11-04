@@ -1,2 +1,0 @@
-build
-setuptools > 60.3.03

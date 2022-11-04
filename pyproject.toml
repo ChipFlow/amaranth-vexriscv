@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "amaranth-vexriscv"
+version = "0.0.0"
+description = "Prebuilt VexRiscv (currently ASIC-optimised configs) and Amaranth Integration"
+authors = ["Myrtle Shah <myrtle.shah@chipflow.io>"]
+license = "MIT-Modern-Variant"
+readme = "README.md"
+packages = [{include = "amaranth_vexriscv"}]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+amaranth = { git = "https://github.com/amaranth-lang/amaranth.git" }
+
+[tool.poetry-dynamic-versioning]
+enable = true
+metadata = true
+vcs = "git"
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"
+
