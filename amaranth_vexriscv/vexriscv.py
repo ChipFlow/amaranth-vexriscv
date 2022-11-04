@@ -39,7 +39,6 @@ class VexRiscv(Elaboratable):
             i_timerInterrupt=self.timer_irq,
             i_softwareInterrupt=self.software_irq,
             i_externalInterruptArray=ext_irq,
-            o_debug_resetOut=self.debug_rst_out,
 
             o_iBusWishbone_CYC=self.ibus.cyc,
             o_iBusWishbone_STB=self.ibus.stb,
