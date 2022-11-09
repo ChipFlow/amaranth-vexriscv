@@ -6,6 +6,7 @@ authors = ["Myrtle Shah <myrtle.shah@chipflow.io>"]
 license = "MIT-Modern-Variant"
 readme = "README.md"
 packages = [{include = "amaranth_vexriscv"}]
+include = ["*.v", "*.yaml"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
