@@ -31,5 +31,3 @@ bin/
 *.cf
 *.json
 *.vcd
-*.v
-*.yaml
