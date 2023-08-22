@@ -5,6 +5,7 @@ from amaranth_soc import wishbone
 
 from pathlib import Path
 
+
 class VexRiscv(Elaboratable):
     def __init__(self, config="LiteDebug", reset_vector=0x00100000):
         self.config = config
@@ -82,7 +83,7 @@ class VexRiscv(Elaboratable):
             "VexRiscv",
             **conn
         )
-        filename = Path(__file__).parent / f"verilog/VexRiscv_{self.config}.v"
-        with open(filename, 'r') as f:
-            platform.add_file(str(filename), f)
+        path = Path(__file__).parent / f"verilog/VexRiscv_{self.config}.v"
+        with open(path, 'r') as f:
+            platform.add_file(path.name, f)
         return m
