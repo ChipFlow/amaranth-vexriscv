@@ -10,7 +10,7 @@ include = ["*.v", "*.yaml"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-amaranth = { git = "https://github.com/amaranth-lang/amaranth.git" }
+amaranth = { git = "https://github.com/amaranth-lang/amaranth" }
 
 [tool.poetry-dynamic-versioning]
 enable = true
